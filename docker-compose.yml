@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  app:
+    image: auto-acceleration:v1.0
+    runtime: nvidia
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./input:/Auto-Acceleration/input
+      - ./output:/Auto-Acceleration/output
+
+    command: ["python", "main.py"]
