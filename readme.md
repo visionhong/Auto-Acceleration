@@ -1,8 +1,12 @@
 ## What is Auto Acceleration?
 
+<br>
+
 **Explanation & **Tutorial****
 
 [https://visionhong.github.io/project/Auto-Acceleration/](https://visionhong.github.io/project/Auto-Acceleration/)    
+
+<br>
 
 **Environment**
 
@@ -13,16 +17,21 @@
 * onnxruntime-gpu: 1.14.1
 * pycuda: 2022.2.2
 
+<br>
+
 **INPUT**
 
 * onnx file
 * config.yml(device, I/O tensor info)
+
+<br>
 
 **OUTPUT**
 
 * An Excel file containing information such as throughput, filesize, and output tensor.
 * converted model file.
 
+<br>
 
 ## Getting Started
 
@@ -31,6 +40,8 @@
    ```bash
    git clone https://github.com/visionhong/Auto-Acceleration.git
    ```
+<br>
+
 2. Place the ONNX file in the input/model directory and modify the config.yml file in the input/config directory to match your model
 
    config.yml sample
@@ -68,25 +79,31 @@
    Please prepare as follows:
 
    ```
-   Auto-Acceleration  
-      input  
-         model  
-            model.onnx  
-         config  
-            config.yml  
+   Auto-Acceleration
+    ├── input
+    │   ├── config
+    │   │   └── config.yml
+    │   └── model
+    │       └── <your_model_name>.onnx
+    └── output
    ```
+<br>
 
 3. Run the convert and inference.
 
    ```bash
    docker compose up
    ```
+<br>
+
 4. Check the results in the output folder.
 
+<br>
 
 ## Notice
 
 * This application was developed based on PyTorch models. Testing has not been conducted on machine learning models or Tensorflow models.
+* The input and output folders are mounted with the container and must be preserved.
 * The current version of the container only supports ONNX opset_version up to 16
 * There is a phenomenon where the output tensor of TensorRT becomes nan when converting from a PyTorch model with weights in fp16 mode to ONNX. Therefore, it is recommended to convert a PyTorch model with weights in fp32 mode to ONNX.
 * Writing the config.yml file must follow the rules below.
