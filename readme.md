@@ -1,12 +1,11 @@
 ## What is Auto Acceleration?
 
-<br>
 
 **Explanation & **Tutorial****
 
 [https://visionhong.github.io/project/Auto-Acceleration/](https://visionhong.github.io/project/Auto-Acceleration/)    
 
-<br>
+
 
 **Environment**
 
@@ -17,14 +16,12 @@
 * onnxruntime-gpu: 1.14.1
 * pycuda: 2022.2.2
 
-<br>
 
 **INPUT**
 
 * onnx file
 * config.yml(device, I/O tensor info)
 
-<br>
 
 **OUTPUT**
 
