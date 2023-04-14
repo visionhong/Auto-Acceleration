@@ -19,7 +19,6 @@
 * An Excel file containing information such as throughput, filesize, and output tensor.
 * converted model file.
 
-`<br/>`
 
 ## Getting Started
 
@@ -35,6 +34,7 @@
    docker compose up
    ```
 4. Check the results in the output folder.
+
 
 
 ## Notice
