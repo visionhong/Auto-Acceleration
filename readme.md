@@ -1,4 +1,4 @@
-#### Auto Acceleration
+## Auto Acceleration
 
 **Environment**
 
@@ -19,9 +19,7 @@
 * An Excel file containing information such as throughput, filesize, and output tensor.
 * converted model file.
 
----
-
-#### Getting Started
+## Getting Started
 
 1. Clone this repository
 
@@ -36,9 +34,7 @@
    ```
 4. Check the results in the output folder.
 
----
-
-#### Notice
+## Notice
 
 * This application was developed based on PyTorch models. Testing has not been conducted on machine learning models or Tensorflow models.
 * The current version of the container only supports ONNX opset_version up to 16
