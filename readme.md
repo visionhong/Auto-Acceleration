@@ -40,13 +40,11 @@
 
 #### Notice
 
-- This application was developed based on PyTorch models. Testing has not been conducted on machine learning models or Tensorflow models.
-  `<br>`
-- The current version of the container only supports ONNX opset_version up to 16
-  `<br>`
-- There is a phenomenon where the output tensor of TensorRT becomes nan when converting from a PyTorch model with weights in fp16 mode to ONNX. Therefore, it is recommended to convert a PyTorch model with weights in fp32 mode to ONNX.
-  `<br>`
-- Writing the config.yml file must follow the rules below.
+* This application was developed based on PyTorch models. Testing has not been conducted on machine learning models or Tensorflow models.
+* The current version of the container only supports ONNX opset_version up to 16
+* There is a phenomenon where the output tensor of TensorRT becomes nan when converting from a PyTorch model with weights in fp16 mode to ONNX. Therefore, it is recommended to convert a PyTorch model with weights in fp32 mode to ONNX.
+* Writing the config.yml file must follow the rules below.
+
   1. The input name must be the same as the input_names used when converting to ONNX.
   2. The input order must be written in the order required by the model
   3. When converting to ONNX, only set the range of the dimensions that are set as dynamic axes, as the dimensions that are not set as dynamic axes must use fixed values.
