@@ -14,13 +14,15 @@ def parse_data_info(onnx_path):
     with open('./input/config/config.yml', 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
+    config['input'] = {str(key): value for key, value in config['input'].items()} # name이 int인 경우 str로 변환
+    config['output'] = {str(key): value for key, value in config['output'].items()}
     session = InferenceSession(onnx_path, providers=['CPUExecutionProvider'])
 
     for i in session.get_inputs():
-        config['input'][str(i.name)]['dtype'] = i.type[7:-1]+'32' if i.type[7:-1] == 'float' else i.type[7:-1]
+        config['input'][i.name]['dtype'] = i.type[7:-1]+'32' if i.type[7:-1] == 'float' else i.type[7:-1]
         
     for o in session.get_outputs():
-        config['output'][str(o.name)]['dtype'] = o.type[7:-1]+'32' if o.type[7:-1] == 'float' else o.type[7:-1]
+        config['output'][o.name]['dtype'] = o.type[7:-1]+'32' if o.type[7:-1] == 'float' else o.type[7:-1]
 
     return config
 
