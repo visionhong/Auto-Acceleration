@@ -17,7 +17,7 @@ def parse_data_info(onnx_path):
     config['input'] = {str(key): value for key, value in config['input'].items()} # name이 int인 경우 str로 변환
     config['output'] = {str(key): value for key, value in config['output'].items()}
     session = InferenceSession(onnx_path, providers=['CPUExecutionProvider'])
-
+    
     for i in session.get_inputs():
         config['input'][i.name]['dtype'] = i.type[7:-1]+'32' if i.type[7:-1] == 'float' else i.type[7:-1]
         
@@ -33,7 +33,9 @@ def main():
     for i in os.listdir('./input/model'):
         shutil.copy2(f'./input/model/{i}', f'./output/onnx/{i}')
 
-    onnx_path = glob("./output/onnx/*.onnx")[0]
+    onnx_name = glob('./input/model/*.onnx')[0]
+    onnx_path = f"./output/onnx/{os.path.basename(onnx_name)}"
+
     model_name = os.path.splitext(os.path.basename(onnx_path))[0]
 
     config = parse_data_info(onnx_path)    
@@ -41,7 +43,7 @@ def main():
     io16 = True
     for i in config['input'].values():
         if 'int' in i['dtype']:
-
+            io16 = False
             break
 
     if config['device'] == 'cpu':
@@ -67,17 +69,19 @@ def main():
             max_shape += (i + ':' + "x".join(map(str, config['input'][i]['max_shape'])) + ',')  
             opt_shape += (i + ':' + "x".join(map(str, config['input'][i]['use_shape'])) + ',')  
 
+        
         convert_fp16(onnx_path, model_name, io16)
         os.makedirs('./output/tensorrt', exist_ok=True)
         
+        dynamic =  False if min_shape == max_shape else True
         subprocess.run(["chmod", "+x", "export/onnx2tensorrt.sh"])
-        subprocess.call(shlex.split(f"export/onnx2tensorrt.sh {onnx_path} {min_shape[:-1]} {opt_shape[:-1]} {max_shape[:-1]} output/tensorrt/{model_name} {io16}"))
+        subprocess.call(shlex.split(f"export/onnx2tensorrt.sh {onnx_path} output/tensorrt/{model_name} {min_shape[:-1]} {opt_shape[:-1]} {max_shape[:-1]} {io16} {dynamic}"))
 
 
-    
-    # ================== metric ====================
+    # # ================== metric ====================
     
     get_metrics(model_name, config)
+
 
 
 

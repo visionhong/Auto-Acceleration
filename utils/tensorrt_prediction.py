@@ -20,7 +20,7 @@ def tensorrt_infer(model_path, config, data, io16, iteration):
         # transfer predictions back
         for key in output.keys():
             cuda.memcpy_dtoh_async(output[key], d_output[key], stream)
-
+        
         # syncronize threads
         stream.synchronize()
         return output
@@ -36,15 +36,19 @@ def tensorrt_infer(model_path, config, data, io16, iteration):
     # Create execution context
     context = engine.create_execution_context()
 
+    
+
     inf_time = 0       
     
     if io16:
         for key in data:
             data[key] = data[key].astype(np.float16)
+    
 
     output = {}
     for key, value in config['output'].items(): 
-        output[key] = np.zeros(value['use_shape']).astype(value['dtype'] if not io16 else np.float16)
+        output[key] = np.empty(value['use_shape']).astype(value['dtype'] if not io16 else np.float16)
+
 
     d_input = {key:cuda.mem_alloc(1 * values.nbytes) for key, values in data.items()}
     d_output = {key:cuda.mem_alloc(1 * values.nbytes) for key, values in output.items()}
@@ -52,16 +56,19 @@ def tensorrt_infer(model_path, config, data, io16, iteration):
     bindings = [int(i) for i in d_input.values()] + [int(i) for i in d_output.values()]
     
 
+    for idx, val in enumerate(data.values()):
+        context.set_binding_shape(idx, val.shape)
+
     stream = cuda.Stream()
 
     for _ in tqdm(range(iteration)):
-        
+
         start_time = time()
         preds = predict()
         end_time = time()
 
         inf_time += (end_time - start_time)
-        
+
 
     result = [i.flatten()[0] for i in preds.values()]
 

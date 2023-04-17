@@ -1,5 +1,5 @@
 # samples
-device: cpu  # cpu or 0, 1, 2, 3 ...
+device: 2  # cpu or 0, 1, 2, 3 ...
     
 input:
     sample:

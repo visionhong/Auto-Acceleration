@@ -26,7 +26,7 @@ def get_result(name, config, iteration, device):
         result[exp_name], time[exp_name], file_size[exp_name] = onnxruntime_infer(
                 model_path=f'./output/onnx/{file_name}',
                 config=config,
-                data=dummy_data,
+                data=dummy_data.copy(),
                 io16 = True if 'io16' in file_name else False,
                 iteration=iteration,
                 device=device
@@ -39,7 +39,7 @@ def get_result(name, config, iteration, device):
             result[exp_name], time[exp_name], file_size[exp_name] = openvino_infer(
                     model_path=f'./output/openvino/{file_name}',
                     config=config,
-                    data=dummy_data,
+                    data=dummy_data.copy(),
                     io16 = True if 'io16' in file_name else False,
                     iteration=iteration
                 )
