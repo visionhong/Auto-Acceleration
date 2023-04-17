@@ -17,10 +17,10 @@ def parse_data_info(onnx_path):
     session = InferenceSession(onnx_path, providers=['CPUExecutionProvider'])
 
     for i in session.get_inputs():
-        config['input'][i.name]['dtype'] = i.type[7:-1]+'32' if i.type[7:-1] == 'float' else i.type[7:-1]
+        config['input'][str(i.name)]['dtype'] = i.type[7:-1]+'32' if i.type[7:-1] == 'float' else i.type[7:-1]
         
     for o in session.get_outputs():
-        config['output'][o.name]['dtype'] = o.type[7:-1]+'32' if o.type[7:-1] == 'float' else o.type[7:-1]
+        config['output'][str(o.name)]['dtype'] = o.type[7:-1]+'32' if o.type[7:-1] == 'float' else o.type[7:-1]
 
     return config
 
