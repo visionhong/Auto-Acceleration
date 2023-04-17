@@ -36,6 +36,7 @@
 
    ```bash
    git clone https://github.com/visionhong/Auto-Acceleration.git
+   cd Auto-Acceleration
    ```
 <br>
 
