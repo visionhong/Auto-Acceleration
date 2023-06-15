@@ -43,9 +43,9 @@
 
 2. Docker Build
 
-```bash
-docker build -t auto-acceleration:v1.0 .
-```
+   ```bash
+   docker build -t auto-acceleration:v1.0 .
+   ```
 
 <br>
 
