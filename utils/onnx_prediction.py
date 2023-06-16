@@ -32,12 +32,11 @@ def onnxruntime_infer(model_path, config, data, io16, iteration, device):
         end_time = time()
 
         inf_time += (end_time - start_time)
-
-    result = [i.flatten()[0] for i in output]  # output의 첫번째 텐서만 가져옴
+  
 
     if len(os.listdir(os.path.dirname(model_path))) > 5:  # onnx 파일이 2GB가 넘어서 분할된 경우 
         size = get_dir_size(os.path.dirname(model_path)) / (1024 * 1024)
     else:
         size = os.stat(model_path).st_size / (1024 * 1024)
         
-    return result, inf_time, size
+    return output, inf_time, size

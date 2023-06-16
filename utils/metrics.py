@@ -60,21 +60,26 @@ def get_result(name, config, iteration, device):
     return result, time, file_size
 
 
+
+def mae(output1, output2):
+    return np.mean(np.abs(output1 - output2))
+
+
 def get_metrics(name, config):
 
-    iteration = 100
+    iteration = 50
     result, time, file_size = get_result(name, config, iteration, config['device'])
-
-
+    
     summary = []
+    standard = np.array(result['onnx'])
+    
     for key, value in result.items():
         summary.append([
                         key, 
                         f'{round(file_size[key], 2)}', 
                         f'{round(iteration/time[key], 2)}',
-                        ] + value)
+                        mae(standard, np.array(value))])
 
-    df = pd.DataFrame(columns=['task', 'file size(MB)', 'throughput(samples/second)'] + [f'output_{i}' for i in range(len(value))],
-                      data=summary)
+    df = pd.DataFrame(columns=['task', 'file size(MB)', 'throughput(samples/second)', 'mae'], data=summary)
     
     df.to_excel('./output/summary.xlsx', index=False)

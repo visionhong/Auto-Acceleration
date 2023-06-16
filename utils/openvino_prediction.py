@@ -33,7 +33,7 @@ def openvino_infer(model_path, config, data, io16, iteration):
         end_time = time()
 
         inf_time += (end_time - start_time)
-
-    result = [output[compiled_model.outputs[i]].flatten()[0] for i in range(len(config['output']))]
-
+    
+    result = [output[compiled_model.outputs[i]] for i in range(len(config['output']))]
+    
     return result, inf_time, os.stat(os.path.splitext(model_path)[0]+'.bin').st_size / (1024 * 1024)

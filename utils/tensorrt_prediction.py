@@ -70,6 +70,5 @@ def tensorrt_infer(model_path, config, data, io16, iteration):
         inf_time += (end_time - start_time)
 
 
-    result = [i.flatten()[0] for i in preds.values()]
-
+    result = [i for i in preds.values()]
     return result, inf_time, os.stat(model_path).st_size / (1024 * 1024)
