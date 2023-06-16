@@ -41,15 +41,7 @@
    
 <br>
 
-2. Docker Build
-
-   ```bash
-   docker build -t auto-acceleration:v1.0 .
-   ```
-
-<br>
-
-3. Place the ONNX file in the input/model directory and modify the config.yml file in the input/config directory to match your model
+2. Place the ONNX file in the input/model directory and modify the config.yml file in the input/config directory to match your model
 
    config.yml sample
 
@@ -96,14 +88,14 @@
    ```
 <br>
 
-4. Run the convert and inference.
+3. Run the convert and inference.
 
    ```bash
    docker compose up
    ```
 <br>
 
-5. Check the results in the output folder.
+4. Check the results in the output folder.
 
 <br>
 
